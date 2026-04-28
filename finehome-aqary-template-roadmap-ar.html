@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="slides-format" content="viewport">
+  <title>خريطة القوالب الحالية والمخططة - فاين هوم وعقاري للاستثمار</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-bg: #171311;
+      --color-bg-deep: #0f0b0a;
+      --color-surface: #241d1a;
+      --color-text: #f6efe9;
+      --color-text-secondary: #dccfc4;
+      --color-text-muted: #a99d93;
+      --color-accent-1: #d7b891;
+      --color-accent-2: #8fa9be;
+      --color-accent-3: #e7dcca;
+      --color-glass-bg: rgba(255,255,255,0.06);
+      --color-glass-border: rgba(255,255,255,0.1);
+      --color-vignette: rgba(0,0,0,0.38);
+      --font-display: 'Noto Naskh Arabic', serif;
+      --font-body: 'Tajawal', sans-serif;
+    }
+  </style>
+  <style>
+    :root { --color-bg: #171311; --color-text: #f6efe9; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--color-bg); }
+    body { font-family: 'Tajawal', sans-serif; color: var(--color-text); overflow: hidden; width: 100vw; height: 100vh; }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide { position: absolute; inset: 0; opacity: 0; transform: scale(.96); transition: opacity .65s ease, transform .65s ease; pointer-events: none; overflow: hidden; background: var(--color-bg); }
+    .slide.active { opacity: 1; transform: scale(1); pointer-events: all; }
+    .slide > .content { position: relative; z-index: 2; width: 100%; max-width: 1200px; height: 100%; margin: 0 auto; padding: 54px 54px 84px; display: flex; flex-direction: column; justify-content: center; }
+    .gradient-mesh { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .blob { position: absolute; border-radius: 50%; filter: blur(80px); animation: float 16s ease-in-out infinite; }
+    .blob.b2 { animation-duration: 20s; animation-direction: reverse; }
+    .blob.b3 { animation-duration: 22s; }
+    @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 25% { transform: translate(40px,-60px) scale(1.08); } 50% { transform: translate(-30px,30px) scale(.95); } 75% { transform: translate(20px,40px) scale(1.05); } }
+    .slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; background: radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,.35) 100%); }
+    .reveal { opacity: 0; transform: translateY(18px); }
+    .nav-controls { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; display: flex; align-items: center; gap: 14px; padding: 10px 16px; background: rgba(20,16,15,.6); border: 1px solid rgba(255,255,255,.12); border-radius: 999px; backdrop-filter: blur(10px); }
+    .nav-btn { width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(255,255,255,.06); color: #f6efe9; font-size: 22px; cursor: pointer; }
+    .slide-dots { display: flex; gap: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; transition: .25s; }
+    .dot.active { background: #d7b891; transform: scale(1.2); }
+    .slide-counter { font-size: 12px; color: #c5b8ab; min-width: 42px; text-align: center; }
+    .eyebrow { letter-spacing: .12em; color: #cbbdaf; font-size: 12px; font-weight: 700; }
+    .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.10); backdrop-filter: blur(12px); box-shadow: 0 24px 70px rgba(0,0,0,.18); }
+    .phone { width: 300px; height: 530px; border-radius: 34px; padding: 14px; background: linear-gradient(180deg,#28211d,#120f0d); box-shadow: 0 24px 60px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.08); }
+    .phone-screen { height: 100%; border-radius: 24px; background: #ede4d8; overflow: hidden; display: flex; flex-direction: column; }
+    .wa-head { padding: 16px 18px; background: #f5ecdf; font-size: 14px; color: #3b332e; font-weight: 700; }
+    .chat-card { margin: 16px; padding: 16px; border-radius: 18px 18px 6px 18px; background: #fffaf3; color: #352f2a; box-shadow: 0 8px 24px rgba(0,0,0,.08); font-size: 14px; line-height: 1.55; }
+    .carousel-card { margin: 0 16px 12px; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #e1d5c9; }
+    .carousel-visual { height: 180px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 30px; position: relative; text-align:center; }
+    .visual-a { background: linear-gradient(135deg,#32516b,#d7b891); }
+    .visual-b { background: linear-gradient(135deg,#1e7695,#6fb1d9); }
+    .visual-c { background: linear-gradient(135deg,#8e6a3f,#d9c2a6); }
+    .carousel-text { padding: 14px 14px 8px; color: #383028; font-size: 14px; line-height: 1.55; min-height: 95px; }
+    .btn-row { display: grid; grid-template-columns: 1fr; border-top: 1px solid #ece2d8; }
+    .btn-row.two { grid-template-columns: 1fr 1fr; }
+    .btn { padding: 11px 10px; text-align: center; font-size: 14px; font-weight: 700; color: #2f7c53; border-right: 1px solid #ece2d8; }
+    .btn:first-child { border-right: none; }
+    .flowline { display: grid; grid-template-columns: 1fr 70px 1fr 70px 1fr; align-items: center; gap: 10px; direction:ltr; }
+    .flowbox { border-radius: 20px; padding: 18px 18px; min-height: 150px; }
+    .arrow { text-align: center; font-size: 34px; color: #d7b891; font-weight: 800; }
+    .mini-card { border-radius: 18px; padding: 18px; min-height: 180px; }
+    .service-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .service-card { border-radius: 18px; padding: 16px; min-height: 188px; display: flex; flex-direction: column; justify-content: space-between; }
+    .badge { display:inline-flex; padding:7px 12px; border-radius:999px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1); color:#f6efe9; font-size:12px; font-weight:700; }
+    .logo-pill { width: 110px; height: 110px; border-radius: 26px; display:flex; align-items:center; justify-content:center; font-family:'Noto Naskh Arabic',serif; font-size: 30px; color:#fff; }
+    .checklist { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .check-item { padding: 14px 16px; border-radius: 16px; }
+    .table { width:100%; border-collapse: collapse; overflow:hidden; border-radius:18px; }
+    .table th, .table td { padding: 14px 16px; border-bottom: 1px solid rgba(255,255,255,.08); text-align:right; font-size: 14px; }
+    .table th { color:#d7b891; font-size:12px; letter-spacing:.08em; }
+    .hero-title { font-family:'Noto Naskh Arabic',serif; font-size: clamp(2.6rem, 5.4vw, 4.8rem); line-height: 1.18; }
+    .section-title { font-family:'Noto Naskh Arabic',serif; font-size: clamp(1.9rem, 3.2vw, 3rem); line-height: 1.2; }
+    .muted { color:#cfc2b6; }
+    .small { font-size: 13px; line-height: 1.65; }
+  </style>
+</head>
+<body>
+<div class="deck">
+  <section class="slide active" data-slide="1">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:420px;height:420px;top:-80px;left:-30px;background:#d7b891;opacity:.15"></div>
+      <div class="blob b2" style="width:360px;height:360px;right:-80px;bottom:-60px;background:#8fa9be;opacity:.12"></div>
+      <div class="blob b3" style="width:220px;height:220px;right:35%;top:16%;background:#e7dcca;opacity:.10"></div>
+    </div>
+    <div class="content text-center items-center">
+      <div class="reveal flex items-center gap-6 mb-8">
+        <div class="logo-pill" style="background:linear-gradient(135deg,#b58c58,#e7dcca)">فاين<br>هوم</div>
+        <div class="logo-pill" style="background:linear-gradient(135deg,#5e7690,#a8c0d4)">عقاري</div>
+      </div>
+      <div class="eyebrow reveal mb-4">عرض تقديمي لأصحاب المصلحة</div>
+      <h1 class="hero-title reveal max-w-[980px]">خريطة القوالب الحالية والمخططة<br>لفاين هوم وعقاري للاستثمار</h1>
+      <p class="reveal muted max-w-[860px] text-[20px] mt-6 leading-relaxed">عرض بصري يوضح القالب الحالي المعتمد لفاين هوم، وخطة التنفيذ القادمة، واتجاه القالب الإنجليزي المخطط لشركة عقاري للاستثمار.</p>
+      <div class="reveal mt-8 flex gap-3 flex-wrap justify-center">
+        <span class="badge">الوضع الحالي</span>
+        <span class="badge">الخطة القادمة</span>
+        <span class="badge">التدفقات والنماذج والتشغيل</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="2">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:300px;height:300px;top:-60px;left:-30px;background:#d7b891;opacity:.10"></div>
+      <div class="blob b2" style="width:260px;height:260px;right:-50px;bottom:-50px;background:#8fa9be;opacity:.08"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">نظرة عامة على العلامتين</div>
+      <h2 class="section-title reveal mb-8">شركتان، ولكل شركة دور مختلف في الحملة</h2>
+      <div class="grid grid-cols-2 gap-7 mt-2">
+        <div class="glass rounded-[28px] p-8 reveal">
+          <div class="flex items-center gap-5 mb-5">
+            <div class="logo-pill shrink-0" style="width:84px;height:84px;border-radius:20px;background:linear-gradient(135deg,#b58c58,#e7dcca);font-size:18px;line-height:1.1;">فاين<br>هوم</div>
+            <div>
+              <div class="text-[30px] font-[Noto Naskh Arabic]">فاين هوم</div>
+              <div class="muted">إعادة تفعيل العملاء الحاليين</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-[15px]">
+            <div class="mini-card glass"><div class="eyebrow mb-2">الجمهور</div><div class="font-semibold text-[18px]">عملاء سابقون</div><div class="small muted mt-2">قاعدة دافئة، لغة عربية، ورسالة مبنية على الثقة السابقة.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">حالة القالب</div><div class="font-semibold text-[18px]">معتمد</div><div class="small muted mt-2">القالب الكاروسيل معتمد وجاهز للتجربة الفعلية.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">الهدف الرئيسي</div><div class="font-semibold text-[18px]">بيع / تقييم</div><div class="small muted mt-2">تحويل ملاك العقارات إلى نماذج الموقع ثم إلى فرق المتابعة.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">اللغة</div><div class="font-semibold text-[18px]">العربية</div><div class="small muted mt-2">أسلوب شخصي مناسب لقائمة فاين هوم الحالية.</div></div>
+          </div>
+        </div>
+        <div class="glass rounded-[28px] p-8 reveal">
+          <div class="flex items-center gap-5 mb-5">
+            <div class="logo-pill shrink-0" style="width:84px;height:84px;border-radius:20px;background:linear-gradient(135deg,#5e7690,#a8c0d4);font-size:20px;">عقاري</div>
+            <div>
+              <div class="text-[30px] font-[Noto Naskh Arabic]">عقاري للاستثمار</div>
+              <div class="muted">اكتساب عملاء جدد باللغة الإنجليزية</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-[15px]">
+            <div class="mini-card glass"><div class="eyebrow mb-2">الجمهور</div><div class="font-semibold text-[18px]">عملاء جدد</div><div class="small muted mt-2">عملاء ناطقون بالإنجليزية يبحثون عن شراء أو بيع أو تأجير أو تقييم أو صيانة.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">حالة القالب</div><div class="font-semibold text-[18px]">مخطط</div><div class="small muted mt-2">الهيكل الاستراتيجي محدد، لكن القالب الإنتاجي سيُبنى لاحقاً.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">الهدف الرئيسي</div><div class="font-semibold text-[18px]">اكتساب وتأهيل</div><div class="small muted mt-2">فصل واضح لنية المستخدم قبل تحويله للفريق المناسب.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">اللغة</div><div class="font-semibold text-[18px]">الإنجليزية</div><div class="small muted mt-2">أسلوب احترافي موجّه للسوق والاكتساب.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="3">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:330px;height:330px;left:-90px;top:10%;background:#e7dcca;opacity:.10"></div>
+      <div class="blob b2" style="width:250px;height:250px;right:-60px;bottom:-40px;background:#8fa9be;opacity:.07"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">فاين هوم — القالب الحالي</div>
+      <h2 class="section-title reveal mb-7">كاروسيل عربي معتمد وجاهز لأول إطلاق</h2>
+      <div class="grid grid-cols-[1fr_340px] gap-8 items-center">
+        <div>
+          <div class="grid grid-cols-2 gap-5">
+            <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">ملاءمة الجمهور</div><div class="text-[22px] font-semibold">عملاء فاين هوم الحاليون</div><div class="small muted mt-3">يعتمد على ميزة العلاقة السابقة ويخاطب نية البيع بشكل مباشر.</div></div>
+            <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">هيكل الأزرار</div><div class="text-[22px] font-semibold">زرّان أساسيان</div><div class="small muted mt-3">سجل الآن وتحدث مع خبير متكرران عبر بطاقات الكاروسيل الحالية.</div></div>
+            <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">دور الرسالة</div><div class="text-[22px] font-semibold">إعادة تنشيط البائعين</div><div class="small muted mt-3">تُبرز التقييم والتسويق والوصول الأسرع إلى المشترين الجادين.</div></div>
+            <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">قرار التنفيذ الآن</div><div class="text-[22px] font-semibold">استخدام القالب أولاً</div><div class="small muted mt-3">لا حاجة لانتظار إعادة التصميم قبل تجربة التشغيل وقياس التفاعل.</div></div>
+          </div>
+          <div class="glass rounded-[24px] p-6 mt-5 reveal">
+            <div class="eyebrow mb-3">ملخص القالب الحالي</div>
+            <div class="checklist">
+              <div class="check-item glass">نص عربي موجه للملاك مع نقاط قيمة واضحة</div>
+              <div class="check-item glass">القالب الكاروسيل معتمد فعلياً داخل واتساب</div>
+              <div class="check-item glass">مناسب لإعادة التواصل مع قائمة العملاء السابقة</div>
+              <div class="check-item glass">جاهز للربط مع ChatIQ والنماذج واختبار الإطلاق</div>
+            </div>
+          </div>
+        </div>
+        <div class="phone reveal">
+          <div class="phone-screen">
+            <div class="wa-head">القالب الحالي</div>
+            <div class="chat-card">
+              <div style="font-weight:700; margin-bottom:8px;">مرحباً Ashraf 👋</div>
+              <div>هل تفكر في بيع عقارك؟</div>
+              <div style="margin-top:10px">✅ إدارة عقارك مجاناً لمدة 6 أشهر</div>
+              <div>✅ تقييم مجاني وسريع لعقارك</div>
+              <div>✅ تسويق احترافي بالصور والفيديو</div>
+              <div>✅ متابعة حتى إتمام الصفقة</div>
+            </div>
+            <div class="carousel-card">
+              <div class="carousel-visual visual-a">FOR SALE</div>
+              <div class="carousel-text">بالسعر المناسب — إذا كنت تفكر في بيع منزلك نساعدك في الوصول إلى المشترين الجادين بسرعة أكبر.</div>
+              <div class="btn-row two"><div class="btn">سجل الآن</div><div class="btn">تحدث مع خبير</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="4">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:320px;height:320px;left:-60px;top:-60px;background:#d7b891;opacity:.10"></div>
+      <div class="blob b2" style="width:280px;height:280px;right:-70px;bottom:-60px;background:#8fa9be;opacity:.09"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">فاين هوم — الخطة التنفيذية</div>
+      <h2 class="section-title reveal mb-7">تدفق مبني على نماذج الموقع لالتقاط بيانات أنظف</h2>
+      <div class="flowline mt-4">
+        <div class="flowbox glass reveal"><div class="eyebrow mb-2">الانطلاقة الحالية</div><div class="text-[22px] font-semibold mb-3">أزرار القالب المعتمد</div><div class="small muted">سجل الآن</div><div class="small muted">تحدث مع خبير</div></div>
+        <div class="arrow reveal">→</div>
+        <div class="flowbox glass reveal"><div class="eyebrow mb-2">الربط</div><div class="text-[20px] font-semibold mb-2">ChatIQ</div><div class="small muted">رسائل آلية بحسب الزر، تصنيفات، وتوزيع على الفرق والمتابعة.</div></div>
+        <div class="arrow reveal">→</div>
+        <div class="flowbox glass reveal"><div class="eyebrow mb-2">الوجهة</div><div class="text-[20px] font-semibold mb-2">نماذج فاين هوم</div><div class="small muted">/add_listing/unit</div><div class="small muted">/add_listing/property</div><div class="small muted">/add_listing/estimate</div></div>
+      </div>
+      <div class="grid grid-cols-3 gap-5 mt-7">
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">التدفق A</div><div class="text-[22px] font-semibold">سجل الآن</div><div class="small muted mt-3">ينقل المستخدم مباشرة إلى نموذج إضافة الوحدة مع وسم وتحويل لفريق المبيعات.</div></div>
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">التدفق B</div><div class="text-[22px] font-semibold">تحدث مع خبير</div><div class="small muted mt-3">يعرض مسار إضافة عقار أو طلب تقييم مع تحويل للفريق المناسب.</div></div>
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">التتبع</div><div class="text-[22px] font-semibold">روابط UTM</div><div class="small muted mt-3">تسمح بمعرفة مصدر الطلبات القادمة من واتساب بشكل أوضح.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="5">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:300px;height:300px;top:-60px;left:-60px;background:#8fa9be;opacity:.11"></div>
+      <div class="blob b2" style="width:260px;height:260px;right:-50px;bottom:-50px;background:#d7b891;opacity:.08"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">عقاري للاستثمار — الوضع الحالي</div>
+      <h2 class="section-title reveal mb-7">اتجاه حملة جديد باللغة الإنجليزية ولم يدخل مرحلة الاعتماد بعد</h2>
+      <div class="grid grid-cols-[.85fr_1.15fr] gap-7 items-center">
+        <div class="phone reveal" style="width:310px;height:540px;justify-self:start;">
+          <div class="phone-screen" style="background:#edf2f7;">
+            <div class="wa-head" style="background:#f6f8fb;">مسودة اتجاه عقاري</div>
+            <div class="chat-card" style="background:#ffffff;">
+              <div style="font-weight:700; margin-bottom:8px;">Hi {{1}}</div>
+              <div>Thank you for your interest in Aqary Investment.</div>
+              <div style="margin-top:10px">Choose the service that fits your needs below.</div>
+            </div>
+            <div class="carousel-card"><div class="carousel-visual visual-b" style="font-size:28px;">BUY · SELL · RENT</div><div class="carousel-text">قالب اكتساب باللغة الإنجليزية مع تقسيم أوضح للخدمات ونية المستخدم.</div><div class="btn-row"><div class="btn">Explore Now</div></div></div>
+            <div class="carousel-card"><div class="carousel-visual visual-c" style="font-size:30px;">VALUE & SUPPORT</div><div class="carousel-text">يمكن ضم التقييم والصيانة ضمن نفس عائلة الخدمات داخل الكاروسيل.</div><div class="btn-row"><div class="btn">Get Support</div></div></div>
+          </div>
+        </div>
+        <div class="glass rounded-[28px] p-8 reveal">
+          <div class="grid grid-cols-2 gap-5">
+            <div class="mini-card glass"><div class="eyebrow mb-2">المرحلة الحالية</div><div class="font-semibold text-[22px]">قبل الإنتاج</div><div class="small muted mt-3">يوجد تصور استراتيجي واتجاه نصي، لكن لا يوجد قالب معتمد جاهز للإرسال بعد.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">الجمهور</div><div class="font-semibold text-[22px]">عملاء إنجليز</div><div class="small muted mt-3">عملاء جدد للشراء أو البيع أو الإيجار أو التقييم أو الصيانة.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">الأسلوب</div><div class="font-semibold text-[22px]">احترافي</div><div class="small muted mt-3">أقل اعتماداً على العلاقة السابقة وأكثر تركيزاً على المصداقية والاكتساب.</div></div>
+            <div class="mini-card glass"><div class="eyebrow mb-2">الاستخدام</div><div class="font-semibold text-[22px]">التقاط السوق</div><div class="small muted mt-3">يبني مدخلاً واضحاً ومباشراً لاكتساب الطلبات الجديدة.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="6">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:310px;height:310px;left:-70px;top:-80px;background:#8fa9be;opacity:.12"></div>
+      <div class="blob b2" style="width:260px;height:260px;right:-60px;bottom:-60px;background:#e7dcca;opacity:.08"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">عقاري للاستثمار — القالب المخطط</div>
+      <h2 class="section-title reveal mb-7">كاروسيل إنجليزي من خمس خدمات للاكتساب والتأهيل</h2>
+      <div class="service-grid">
+        <div class="service-card glass reveal"><div><div class="eyebrow mb-2">البطاقة 1</div><div class="text-[22px] font-semibold">Buy Property</div><div class="small muted mt-3">عرض عقارات تناسب الميزانية والأهداف الاستثمارية.</div></div><div class="badge">Explore Now</div></div>
+        <div class="service-card glass reveal"><div><div class="eyebrow mb-2">البطاقة 2</div><div class="text-[22px] font-semibold">Sell Property</div><div class="small muted mt-3">تسويق العقار مع دعم في التسعير والوصول لشريحة أوسع.</div></div><div class="badge">Start Selling</div></div>
+        <div class="service-card glass reveal"><div><div class="eyebrow mb-2">البطاقة 3</div><div class="text-[22px] font-semibold">Rent Property</div><div class="small muted mt-3">خدمة موجهة لطلبات السكن أو الاستثمار في الإيجار.</div></div><div class="badge">View Rentals</div></div>
+        <div class="service-card glass reveal"><div><div class="eyebrow mb-2">البطاقة 4</div><div class="text-[22px] font-semibold">Evaluation</div><div class="small muted mt-3">طلب تقييم احترافي قبل اتخاذ القرار العقاري التالي.</div></div><div class="badge">Request Valuation</div></div>
+        <div class="service-card glass reveal"><div><div class="eyebrow mb-2">البطاقة 5</div><div class="text-[22px] font-semibold">Maintenance</div><div class="small muted mt-3">التقاط طلبات الصيانة ضمن نفس منظومة الحملة.</div></div><div class="badge">Get Support</div></div>
+      </div>
+      <div class="grid grid-cols-3 gap-5 mt-7">
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">هدف القالب</div><div class="text-[20px] font-semibold">اختيار الخدمة أولاً</div><div class="small muted mt-3">المستخدم يحدد احتياجه بنفسه قبل تدخل الفريق.</div></div>
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">نموذج التدفق</div><div class="text-[20px] font-semibold">Routing بحسب النية</div><div class="small muted mt-3">كل خدمة يمكن ربطها بتدفق ChatIQ وفريق خاص بها.</div></div>
+        <div class="glass rounded-[22px] p-6 reveal"><div class="eyebrow mb-2">الأثر المتوقع</div><div class="text-[20px] font-semibold">بوابة اكتساب إنجليزية</div><div class="small muted mt-3">تبني قناة أوضح لاستقطاب العملاء الجدد باسم عقاري.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="7">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:320px;height:320px;left:-70px;top:-50px;background:#d7b891;opacity:.12"></div>
+      <div class="blob b2" style="width:260px;height:260px;right:-40px;bottom:-60px;background:#8fa9be;opacity:.08"></div>
+    </div>
+    <div class="content">
+      <div class="eyebrow reveal mb-3">خطة التسليم</div>
+      <h2 class="section-title reveal mb-7">ما الذي سيتم تسليمه عبر الشركتين</h2>
+      <table class="table glass reveal">
+        <thead>
+          <tr><th>مسار العمل</th><th>فاين هوم</th><th>عقاري للاستثمار</th><th>المخرج النهائي</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>التعامل مع القالب</td><td>استخدام القالب العربي المعتمد الحالي</td><td>بناء القالب الإنجليزي الإنتاجي من الهيكل المخطط</td><td>قوالب جاهزة للإطلاق</td></tr>
+          <tr><td>ربط التدفقات</td><td>ربط الأزرار الحالية بنماذج الموقع</td><td>ربط بطاقات الخدمات بتدفقات تأهيل واكتساب</td><td>منطق Routing داخل ChatIQ</td></tr>
+          <tr><td>تكامل الموقع</td><td>نماذج الوحدة والعقار والتقييم</td><td>منطق وجهات بحسب نوع الخدمة</td><td>روابط متتبعة وتسليم أنظف للطلبات</td></tr>
+          <tr><td>الاختبار والإطلاق</td><td>اختبار القالب الحي وإطلاق أول دفعة</td><td>إكمال القالب المخطط ثم اختباره ونشره</td><td>جاهزية تشغيلية كاملة</td></tr>
+        </tbody>
+      </table>
+      <div class="grid grid-cols-4 gap-4 mt-6">
+        <div class="glass rounded-[18px] p-5 reveal"><div class="eyebrow mb-2">المرحلة 1</div><div class="font-semibold">تفعيل القالب الحالي</div></div>
+        <div class="glass rounded-[18px] p-5 reveal"><div class="eyebrow mb-2">المرحلة 2</div><div class="font-semibold">ربط التدفقات بالموقع</div></div>
+        <div class="glass rounded-[18px] p-5 reveal"><div class="eyebrow mb-2">المرحلة 3</div><div class="font-semibold">الاختبار والتصنيف والتوزيع</div></div>
+        <div class="glass rounded-[18px] p-5 reveal"><div class="eyebrow mb-2">المرحلة 4</div><div class="font-semibold">اعتماد أصحاب المصلحة والإطلاق</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide" data-slide="8">
+    <div class="gradient-mesh">
+      <div class="blob" style="width:430px;height:430px;left:-90px;top:-80px;background:#d7b891;opacity:.16"></div>
+      <div class="blob b2" style="width:340px;height:340px;right:-100px;bottom:-80px;background:#8fa9be;opacity:.14"></div>
+      <div class="blob b3" style="width:240px;height:240px;right:42%;top:20%;background:#e7dcca;opacity:.11"></div>
+    </div>
+    <div class="content items-center text-center">
+      <div class="eyebrow reveal mb-4">شريحة القرار</div>
+      <h2 class="hero-title reveal">الموافقات المطلوبة من أصحاب المصلحة</h2>
+      <div class="grid grid-cols-3 gap-5 mt-8 w-full max-w-[1050px]">
+        <div class="glass rounded-[24px] p-7 reveal"><div class="text-[24px] font-semibold mb-3">إطلاق فاين هوم</div><div class="small muted">اعتماد الإطلاق الأول باستخدام القالب الحالي المعتمد وربط نماذج الموقع.</div></div>
+        <div class="glass rounded-[24px] p-7 reveal"><div class="text-[24px] font-semibold mb-3">بناء عقاري</div><div class="small muted">اعتماد تطوير القالب الإنجليزي وفق نموذج الخدمات الخمس.</div></div>
+        <div class="glass rounded-[24px] p-7 reveal"><div class="text-[24px] font-semibold mb-3">تحديد الملاك التشغيليين</div><div class="small muted">تأكيد الفرق المسؤولة عن المبيعات والتقييم والردود والمتابعة.</div></div>
+      </div>
+      <p class="reveal muted text-[18px] mt-10 max-w-[760px]">هذه الخطة تسمح لفاين هوم بالتحرك فوراً باستخدام الأصل المعتمد حالياً، مع بناء قناة اكتساب إنجليزية أوضح وموازية لعقاري للاستثمار.</p>
+    </div>
+  </section>
+</div>
+
+<div class="nav-controls">
+  <button class="nav-btn" onclick="changeSlide(-1)">&#8249;</button>
+  <div class="slide-dots" id="dots"></div>
+  <button class="nav-btn" onclick="changeSlide(1)">&#8250;</button>
+  <span class="slide-counter" id="counter">1 / 8</span>
+</div>
+
+<script>
+let current = 1;
+const total = document.querySelectorAll('.slide').length;
+const dotsContainer = document.getElementById('dots');
+const counter = document.getElementById('counter');
+for (let i = 1; i <= total; i++) { const dot = document.createElement('div'); dot.className = 'dot' + (i === 1 ? ' active' : ''); dot.onclick = () => goToSlide(i); dotsContainer.appendChild(dot); }
+function goToSlide(n) { const prev = document.querySelector('.slide.active'); const next = document.querySelector(`.slide[data-slide="${n}"]`); if (prev) prev.classList.remove('active'); if (next) { next.classList.add('active'); animateSlide(next); } current = n; updateNav(); }
+function changeSlide(dir) { let next = current + dir; if (next < 1) next = total; if (next > total) next = 1; goToSlide(next); }
+function updateNav() { document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i + 1 === current)); counter.textContent = `${current} / ${total}`; }
+function animateSlide(slide) { slide.querySelectorAll('.reveal').forEach((el, i) => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.transform = 'translateY(18px)'; void el.offsetHeight; const delay = i * 0.08; el.style.transition = `opacity .42s ease ${delay}s, transform .42s ease ${delay}s`; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }); }
+document.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); } });
+let touchStartX = 0;
+document.addEventListener('touchstart', (e) => touchStartX = e.touches[0].clientX);
+document.addEventListener('touchend', (e) => { const diff = touchStartX - e.changedTouches[0].clientX; if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1); });
+animateSlide(document.querySelector('.slide.active'));
+</script>
+</body>
+</html>
